@@ -20,6 +20,13 @@ jobs:
           node-version: 10
           registry-url: https://registry.npmjs.org/
 
+      - name: Get Version ID
+        id: get-version-id
+        run: |
+          VERSION_ID=$(cat package.json | grep version | sed 's|  \"version\": \"||g' | sed 's|\",||g')
+          echo "::set-output name=version-id::$(echo $VERSION_ID)"
+          echo $VERSION_ID
+
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           npm install -g gulp
@@ -30,7 +37,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
+          BRANCH: release # The branch the action should deploy to.
           FOLDER: dist # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
 
