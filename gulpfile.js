@@ -289,7 +289,8 @@ gulp.task('build:js:helper', function() {
 gulp.task('build:js:pack', function() {
   return gulp.src('js/amazeui.js')
     .pipe(webpack({
-      watch: !(NODE_ENV === 'travisci' || NODE_ENV === 'production'),
+      watch: (NODE_ENV === 'dev'),
+      // watch: !(NODE_ENV === 'travisci' || NODE_ENV === 'production'),
       output: {
         filename: 'amazeui.js',
         library: 'AMUI',
